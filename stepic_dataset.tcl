@@ -4,7 +4,7 @@ set strVal "AACTGTATCCCACGATCCTTCCAGCCACCACGATCCCACGATCCTCGGAGTCATTCCAGCCACCACGA
 # codon size we are looking at
 set desiredLength 13
 # true size
-set desiredLength [expr $desiredLength - 1]
+set desiredLengthMod [expr $desiredLength - 1]
 
 # String Length
 set strLength [string length $strVal]
@@ -24,12 +24,12 @@ set ::rangeList ""
 for {set i 0} { $i < $strLength} {incr i} {
 	
 	# This gets the 11 character string desired
-	set strRange [string range $strVal $i [expr $i + $desiredLength]]
+	set strRange [string range $strVal $i [expr $i + $desiredLengthMod]]
 	set strFirst [string first $strRange $strVal $i]
 	set regexpCount [regexp -all $strRange $strVal]
 	
 	# the ten is an arbitrary min times of repetition
-	if {$regexpCount >= 8 && [string length $strRange] >= 13 && [lsearch $::rangeList $strRange] == -1} {
+	if {$regexpCount >= 8 && [string length $strRange] == $desiredLength && [lsearch $::rangeList $strRange] == -1} {
 		lappend ::rangeList $strRange
 		puts "$strRange:$regexpCount"
 	}
