@@ -6,6 +6,8 @@ set desiredLength 11
 # true size
 set desiredLengthMod [expr $desiredLength - 1]
 
+set runtimeStart [clock seconds]
+
 # String Length
 set strLength [string length $strVal]
 
@@ -34,9 +36,12 @@ for {set i 0} { $i < $strLength} {incr i} {
 		puts "$strRange:$regexpCount"
 	}
 }
-
+set runtimeEnd [clock seconds]
 
 puts "Length: $strLength
 ATGA Match: $atgaMatch
 CTTG Match: $cttgMatch
-rangeList: $::rangeList"
+rangeList: $::rangeList
+runtimeStart: $runtimeStart
+runtimeEnd: $runtimeEnd
+runtime: [expr $runtimeEnd - $runtimeStart]"
