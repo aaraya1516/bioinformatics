@@ -1,10 +1,13 @@
 
+# string we are analyzing
 set strVal "TTCTACGTAACCAACTGGAACGTTAGTGGTCCGCCAACGTTAGTACGTGCTTTTCTACGTAAGGTCCGCCAACGTTAGTGGTCCGCCCCAACTGGTTCTACGTAAGGTCCGCCACGTGCTTCCAACTGGGGTCCGCCACGTGCTTACGTGCTTAACGTTAGTTTCTACGTAAAACGTTAGTCCAACTGGACGTGCTTTTCTACGTAAAACGTTAGTAACGTTAGTCCAACTGGCCAACTGGACGTGCTTAACGTTAGTTTCTACGTAAAACGTTAGTAACGTTAGTGGTCCGCCACGTGCTTCCAACTGGACGTGCTTACGTGCTTAACGTTAGTGGTCCGCCCCAACTGGAACGTTAGTCCAACTGGAACGTTAGTGGTCCGCCTTCTACGTAAAACGTTAGTGGTCCGCCACGTGCTTTTCTACGTAATTCTACGTAACCAACTGGTTCTACGTAAACGTGCTTTTCTACGTAATTCTACGTAAACGTGCTTCCAACTGGTTCTACGTAACCAACTGGAACGTTAGTACGTGCTTACGTGCTTAACGTTAGTACGTGCTTCCAACTGGACGTGCTTCCAACTGGTTCTACGTAATTCTACGTAATTCTACGTAAAACGTTAGTCCAACTGGCCAACTGGACGTGCTTTTCTACGTAAAACGTTAGTGGTCCGCCGGTCCGCCGGTCCGCCACGTGCTTGGTCCGCCAACGTTAGTCCAACTGGTTCTACGTAATTCTACGTAAACGTGCTTTTCTACGTAACCAACTGGGGTCCGCCTTCTACGTAAACGTGCTTAACGTTAGTACGTGCTTCCAACTGGAACGTTAGTAACGTTAGTTTCTACGTAATTCTACGTAAACGTGCTTAACGTTAGTAACGTTAGTACGTGCTTACGTGCTTTTCTACGTAAGGTCCGCCAACGTTAGTAACGTTAGTGGTCCGCCGGTCCGCCCCAACTGG"
+# codon size we are looking at
+set desiredLength 11
+# true size
+set desiredLength [expr $desiredLength - 1]
 
 # String Length
 set strLength [string length $strVal]
-
-#11
 
 # Does it match a known start ATGATCAAG
 set atga "ATGATCAAG"
@@ -14,37 +17,25 @@ set atgaMatch [string match -nocase $atga $strVal]
 set cttg "CTTGATCAT"
 set cttgMatch [string match -nocase $cttg $strVal]
 
-set firstVal 0
 set returnList ""
-set strRange ""
+list strRange ""
 set strFirst ""
-proc forLooper {strVal firstVal OGincNum} {
-	for {set incrNum $OGincNum} {[expr $incrNum - $firstVal] <= 11} {incr incrNum} {
-		#puts "$incrNum"
-		set strRange [string range $strVal $firstVal $incrNum]
-		set strFirst [string first $strRange $strVal $firstVal]
-		if {$strFirst >= 0 && [string length $strRange] == 11} {
-			lappend returnList "$strRange"
-			puts $strRange
-		}
-		#incr firstVal
-	}
-}
 
-for {
-		set firstVal 0
-		set OGincNum 2
-	} {
-		$firstVal <= $strLength
-	} {
-		incr firstVal
-		incr OGincNum
-	} {
-	forLooper $strVal $firstVal $OGincNum
+
+for {set i 0} { $i < $strLength} {incr i} {
+	
+	# This gets the 11 character string desired
+	set strRange [string range $strVal $i [expr $i + $desiredLength]]
+	set strFirst [string first $strRange $strVal $i]
+	set regexpCount [regexp -all $strRange $strVal]
+	
+	# the ten is an arbitrary min times of repetition
+	if {$regexpCount >= 10 && [string length $strRange] == 11} {
+		puts "$strRange:$regexpCount"
+	}
 }
 
 
 puts "Length: $strLength
 ATGA Match: $atgaMatch
-CTTG Match: $cttgMatch
-List: $returnList"
+CTTG Match: $cttgMatch"
