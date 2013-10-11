@@ -5,8 +5,16 @@
 #
 #
 
-set pattern "ATAT"
-set genome "GATATATGCATATACTT"
+set pattern "CTTGATCAT"
+
+if {[file exists genome.txt]} {
+	set genomefile [open genome.txt r]
+	set genome [read $genomefile]
+	close $genomefile
+} else {
+	set genome "GATATATGCATATACTT"
+}
+
 set locArray1 ""
 set lastLoc 0
 set locationNow 0
