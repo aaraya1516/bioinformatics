@@ -30,11 +30,11 @@ for {set i 0} { $i < $strLength-$k} {incr i} {
 	# This gets the $k length character string desired
 	set strRange [string range $strVal $i [expr $i + $kMod]]
 	# count all matching strings
-	set regexpCount [regexp -all $strRange [string range $strVal $i+1 end]]
+	set regexpCount [regexp -all $strRange [string range $strVal $i+1 $i+$l]]
 	#puts "$strRange:$regexpCount"
-	if {$regexpCount == $t && [string length $strRange] == $k && [lsearch $::rangeList $strRange] == -1} {
+	if {$regexpCount >= $t && [string length $strRange] == $k && [lsearch $::rangeList $strRange] == -1} {
 		lappend ::rangeList $strRange
-		puts "$strRange:$regexpCount"
+		#puts "$strRange:$regexpCount"
 	}
 }
 
