@@ -1,8 +1,9 @@
 # string we are analyzing
-if {[file exists genome.txt] && 1==1} {
-	set genomefile [open genome.txt r]
+if {[file exists ../genome.txt] && 1==1} {
+	set genomefile [open ../genome.txt r]
 	set strVal [read $genomefile]
 	close $genomefile
+	puts "Genome File Found!"
 } else {
 	set strVal "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA"
 }
@@ -10,8 +11,10 @@ if {[file exists genome.txt] && 1==1} {
 # t = how many times it repeats
 # codon size we are looking at (k-mer length)
 set k 9
-set t 4
+set t 3
 set l 500
+# true size
+set kMod [expr $k - 1]
 
 set runtimeStart [clock seconds]
 
@@ -26,10 +29,10 @@ for {set i 0} { $i < $strLength-$k} {incr i} {
 	
 	# This gets the $k length character string desired
 	set strRange [string range $strVal $i [expr $i + $kMod]]
-	#set strFirst [string first $strRange $strVal $i]
+	# count all matching strings
 	set regexpCount [regexp -all $strRange [string range $strVal $i+1 end]]
 	#puts "$strRange:$regexpCount"
-	if {$regexpCount == $t-1 && [string length $strRange] == $k && [lsearch $::rangeList $strRange] == -1} {
+	if {$regexpCount == $t && [string length $strRange] == $k && [lsearch $::rangeList $strRange] == -1} {
 		lappend ::rangeList $strRange
 		puts "$strRange:$regexpCount"
 	}
