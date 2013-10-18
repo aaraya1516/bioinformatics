@@ -37,18 +37,20 @@ strFirst = ""
 rangeList = [];
 
 i = 0
+print "Starting Loop"
 while (i < strLength-k):
 	endRange = i+k
 	strRange = genomeStr[i:endRange]
 	#print strRange
 	#print rangeList
 	
-	if genomeStr.count(strRange, i, i+L) == 3 and (strRange not in rangeList):
+	if genomeStr.count(strRange, i, i+L) >= 3 and (strRange not in rangeList):
 		rangeList.append(strRange)
-		print strRange
+		#print strRange
 		
 	i=i+1
 
+print "Loop Ended"
 epoch_timeEnd = int(time.time())
 
 print "Length:"+str(strLength)
