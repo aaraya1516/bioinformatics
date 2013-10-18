@@ -1,8 +1,9 @@
 # string we are analyzing
-if {[file exists genome.txt] && 0==1} {
-	set genomefile [open genome.txt r]
+if {[file exists ../genome.txt]} {
+	set genomefile [open ../genome.txt r]
 	set strVal [read $genomefile]
 	close $genomefile
+	puts "Genome File Found!"
 } else {
 	set strVal "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA"
 }
