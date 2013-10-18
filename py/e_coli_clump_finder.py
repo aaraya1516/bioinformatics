@@ -43,17 +43,17 @@ while (i < strLength-k):
 	#print strRange
 	#print rangeList
 	
-	if genomeStr.count(strRange, i, strLength) == 3 and (strRange not in rangeList):
+	if genomeStr.count(strRange, i, i+L) == 3 and (strRange not in rangeList):
 		rangeList.append(strRange)
 		print strRange
-
+		
 	i=i+1
 
 epoch_timeEnd = int(time.time())
 
-print "Length:"+strLength
-print "rangeList:"+rangeList
-print "rangeList Length:"+ len(rangeList)
-print "runtimeStart:"+epoch_timeStart
-print "runtimeEnd:"+epoch_timeEnd
-print "runtime:"+epoch_timeEnd-epoch_timeStart
+print "Length:"+str(strLength)
+print "rangeList:"+str(rangeList)
+print "rangeList Length:"+ str(len(rangeList))
+print "runtimeStart:"+str(epoch_timeStart)
+print "runtimeEnd:"+str(epoch_timeEnd)
+print "runtime:"+str(epoch_timeEnd-epoch_timeStart)
