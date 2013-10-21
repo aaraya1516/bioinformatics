@@ -33,6 +33,8 @@ strLength = len(genomeStr)
 
 rangeList = [];
 
+concatString = ""
+
 i = 0
 print "Starting Loop"
 while (i <= strLength-k):
@@ -41,8 +43,11 @@ while (i <= strLength-k):
     #value of string 
     strRange = genomeStr[i:endRange]
 
-    if len(strRange) == k and genomeStr.count(strRange, i, i+L) >= t and (strRange not in rangeList):
+    if len(strRange) == k and genomeStr.count(strRange, i, i+L) >= t and strRange not in rangeList:
         rangeList.append(strRange)
+        #concatString=concatString+" "+strRange
+        #print "String: "+strRange
+        #print "Count: "+str(genomeStr.count(strRange, i, i+L))
 
     i=i+1
 
@@ -50,6 +55,7 @@ print "Loop Ended"
 epoch_timeEnd = int(time.time())
 
 print "Length:"+str(strLength)
+#print "ConcatString:"+concatString
 #print "rangeList:"+str(rangeList)
 print "rangeList Length:"+ str(len(rangeList))
 print "runtimeStart:"+str(epoch_timeStart)
