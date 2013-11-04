@@ -54,7 +54,7 @@ while (i <= strLength-1):
     if skewCnt <= minSkewSet:
         oriIndexLength = len(oriIndex);
         #print str(oriIndexLength);
-        if oriIndexLength > 0 and skewCnt < minSkewSet:
+        if skewCnt < minSkewSet:
             oriIndex.remove(prevMinSkewCnt);
             #print str(prevMinSkewCnt)
         oriIndex.append(i)
