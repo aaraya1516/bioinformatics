@@ -51,13 +51,13 @@ while (i <= strLength-1):
         cCnt=cCnt+1
     i=i+1
     minSkewSet = min(skewSet)
-    if skewCnt < minSkewSet:
+    if skewCnt <= minSkewSet:
         oriIndexLength = len(oriIndex);
         #print str(oriIndexLength);
         if oriIndexLength > 0 and skewCnt < minSkewSet:
-            oriIndex.remove(str(prevMinSkewCnt));
-            #print "What?"
-        oriIndex.append(str(i))
+            oriIndex.remove(prevMinSkewCnt);
+            #print str(prevMinSkewCnt)
+        oriIndex.append(i)
         prevMinSkewCnt = i;
 
 print "Loop Ended"
