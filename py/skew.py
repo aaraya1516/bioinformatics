@@ -24,22 +24,25 @@ if path.isfile(PATH) and access(PATH, R_OK) and useFile == 1:
         genomeFile.close();
     #print "String:", genomeStr
 else:
-    genomeStr = "CATGGGCATCGGCCATACGCC"
+    genomeStr = "TAAAGACTGCCGAGAGGCCAACACGAGTGCTAGAACGAGGGGCGTAAACGCGGGTCCGAT"
 
 epoch_timeStart = int(time.time())
 
 strLength = len(genomeStr)
 
-skewCnt = gCnt = cCnt = 0
-skewSet = ""
+skewCnt = gCnt = cCnt = prevMinSkewCnt= 0
+skewSet = [];
+oriIndex = [];
 i = 0
 
 print "Starting Loop"
-while (i <= strLength):
+print "Genome Length:"+str(strLength);
+while (i <= strLength-1):
     #value of string 
     strRange = genomeStr[i:i+1]
-    skewSet.join(str(skewCnt));
-    print str(skewCnt);
+    # appends value to skewSet list
+    skewSet.append(skewCnt);
+    #print str(skewCnt);
     if strRange == "G":
         skewCnt=skewCnt+1
         gCnt=gCnt+1
@@ -47,12 +50,22 @@ while (i <= strLength):
         skewCnt=skewCnt-1
         cCnt=cCnt+1
     i=i+1
+    minSkewSet = min(skewSet)
+    if skewCnt < minSkewSet:
+        oriIndexLength = len(oriIndex);
+        #print str(oriIndexLength);
+        if oriIndexLength > 0 and skewCnt < minSkewSet:
+            oriIndex.remove(str(prevMinSkewCnt));
+            #print "What?"
+        oriIndex.append(str(i))
+        prevMinSkewCnt = i;
 
 print "Loop Ended"
 epoch_timeEnd = int(time.time())
 
-print "Skew:"+ str(skewCnt)
-print "Skew Set:"+str(skewSet)
+print "Skew Sum:"+ str(skewCnt)
+#print "Skew Set:"+str(skewSet)
+print "OriC Index:" + str(oriIndex)
 print "#G:"+str(gCnt)
 print "#C:"+str(cCnt)
 print "runtimeStart:"+str(epoch_timeStart)
