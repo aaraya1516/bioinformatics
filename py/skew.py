@@ -56,10 +56,11 @@ while (inr <= strLength-1):
     minSkewSet = min(skewSet)
     #print "minSkewSet:"+str(minSkewSet)
     #print "skewCnt:"+str(skewCnt)
-    #print "prevMinSkewCnt:"+str(prevMinSkewCnt)
+    if str(prevMinSkewCnt) != str(prevMinSkewCnt):
+        print "prevMinSkewCnt:"+str(prevMinSkewCnt)
 
     if skewCnt <= minSkewSet:
-        oriIndexLength = len(oriIndex);
+        #oriIndexLength = len(oriIndex);
         #print str(oriIndexLength);
         if skewCnt < minSkewSet:
             for index in prevMinSkewCnt:
@@ -73,8 +74,11 @@ print "Loop Ended"
 epoch_timeEnd = int(time.time())
 
 print "Skew Sum:"+ str(skewCnt)
-print "Skew Set:"+str(skewSet)
+#print "Skew Set:"+str(skewSet)
 print "OriC Index:" + str(oriIndex)
+print "Indexed Skew Sum:"
+for index in oriIndex:
+    print skewSet[index]
 print "#G:"+str(gCnt)
 print "#C:"+str(cCnt)
 print "runtimeStart:"+str(epoch_timeStart)
