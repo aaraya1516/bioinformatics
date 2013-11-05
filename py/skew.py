@@ -30,16 +30,19 @@ epoch_timeStart = int(time.time())
 
 strLength = len(genomeStr)
 
-skewCnt = gCnt = cCnt = prevMinSkewCnt= 0
-skewSet = [];
+skewCnt =0;
+gCnt =0;
+cCnt = 0;
+skewSet =[];
+prevMinSkewCnt=[];
 oriIndex = [];
-i = 0
+inr = 0;
 
 print "Starting Loop"
 print "Genome Length:"+str(strLength);
-while (i <= strLength-1):
+while (inr <= strLength-1):
     #value of string 
-    strRange = genomeStr[i:i+1]
+    strRange = genomeStr[inr:inr+1]
     # appends value to skewSet list
     skewSet.append(skewCnt);
     #print str(skewCnt);
@@ -49,22 +52,28 @@ while (i <= strLength-1):
     elif strRange == "C":
         skewCnt=skewCnt-1
         cCnt=cCnt+1
-    i=i+1
+    inr=inr+1
     minSkewSet = min(skewSet)
+    #print "minSkewSet:"+str(minSkewSet)
+    #print "skewCnt:"+str(skewCnt)
+    #print "prevMinSkewCnt:"+str(prevMinSkewCnt)
+
     if skewCnt <= minSkewSet:
         oriIndexLength = len(oriIndex);
         #print str(oriIndexLength);
         if skewCnt < minSkewSet:
-            oriIndex.remove(prevMinSkewCnt);
+            for index in prevMinSkewCnt:
+                oriIndex.remove(index);
+                prevMinSkewCnt.remove(index);
             #print str(prevMinSkewCnt)
-        oriIndex.append(i)
-        prevMinSkewCnt = i;
+        oriIndex.append(inr)
+        prevMinSkewCnt.append(inr);
 
 print "Loop Ended"
 epoch_timeEnd = int(time.time())
 
 print "Skew Sum:"+ str(skewCnt)
-#print "Skew Set:"+str(skewSet)
+print "Skew Set:"+str(skewSet)
 print "OriC Index:" + str(oriIndex)
 print "#G:"+str(gCnt)
 print "#C:"+str(cCnt)
