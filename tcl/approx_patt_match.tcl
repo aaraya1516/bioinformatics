@@ -76,33 +76,26 @@ for {set i 0} { $i < 2} {incr i} {
 		set fourth 0
 		for {set inc 0} {$inc <= [expr $mtx_l-[expr $t-2]]} {incr inc} {
 			set mtx_base $mtx_base_original
-			if {$second > $L || $i <1} {
+			if {$i <1} {
 				set mtx_base [string replace $mtx_base $inc $inc "."]
 				incr second
 				puts "Base:$mtx_base"
 				#count mathing strings
 				set matchCount [regexp -all $gnomestr $mtx_base]
 				puts "Match Count:$matchCount"
-				if {$matchCount >= 1} {
-						[string first $mtx_base $gnomestr]
-					}
-			} else {
-				set mtx_base [string replace $mtx_base 0 0 "."]
+			}
+		}
+		set mtx_base [string replace $mtx_base 0 0 "."]
 				set mtx_new_base $mtx_base
 				
 				for {set in 1} {$in <= [expr $mtx_l-[expr $t-2]]} {incr in} {
 					set mtx_base $mtx_new_base
 					set mtx_base [string replace $mtx_base $in $in "."]
-					puts "Base:$mtx_base"
+					puts "Base2:$mtx_base"
 					#count mathing strings
 					set matchCount [regexp -all $gnomestr $mtx_base]
-					puts "Match Count:$matchCount"
-					if {$matchCount >= 1} {
-						[string first $mtx_base $gnomestr]
-					}
+					puts "Match2 Count:$matchCount"
 				}
-			}
-		}		
 	}
 
 }
