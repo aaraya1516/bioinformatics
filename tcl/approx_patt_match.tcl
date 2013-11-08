@@ -45,12 +45,18 @@ if {0} {
 }
 
 set ::rangeList ""
+set mtx_base_original $mtx_base
 #
 # Start Sorting through string
 #
-for {set i 0} { $i < $gnmstrLmod} {incr i} {
+#for {set i 0} { $i < $gnmstrLmod} {incr i} {
+for {set i 0} { $i < 2} {incr i} {
+	set mtx_base $mtx_base_original
 	#Do we have a mtx_base given?
 	if {$mtx_base == ""} {
+		#
+		# Exact Pattern Matching
+		#
 		# This gets the $k length character string desired
 		set strRange [string range $gnomestr $i [expr $i + $kMod]]
 		# count all matching strings
@@ -64,23 +70,38 @@ for {set i 0} { $i < $gnmstrLmod} {incr i} {
 		#
 		#Approximate Pattern Matching
 		#
-		puts $i
+		puts "i count:$i"
 		set second 0
 		set third 0
 		set fourth 0
-		for {set inc 0} {$inc <= [expr $mtx_l-[expr $t-1]]} {incr inc} {
-			if {$second == 0} {
+		for {set inc 0} {$inc <= [expr $mtx_l-[expr $t-2]]} {incr inc} {
+			set mtx_base $mtx_base_original
+			if {$second > $L || $i <1} {
 				set mtx_base [string replace $mtx_base $inc $inc "."]
 				incr second
+				puts "Base:$mtx_base"
+				#count mathing strings
+				set matchCount [regexp -all $gnomestr $mtx_base]
+				puts "Match Count:$matchCount"
+				if {$matchCount >= 1} {
+						[string first $mtx_base $gnomestr]
+					}
 			} else {
 				set mtx_base [string replace $mtx_base 0 0 "."]
+				set mtx_new_base $mtx_base
+				
+				for {set in 1} {$in <= [expr $mtx_l-[expr $t-2]]} {incr in} {
+					set mtx_base $mtx_new_base
+					set mtx_base [string replace $mtx_base $in $in "."]
+					puts "Base:$mtx_base"
+					#count mathing strings
+					set matchCount [regexp -all $gnomestr $mtx_base]
+					puts "Match Count:$matchCount"
+					if {$matchCount >= 1} {
+						[string first $mtx_base $gnomestr]
+					}
+				}
 			}
-			for {set in 1} {$in <= [expr $mtx_l-[expr $t-1]]} {incr in} {
-				set mtx_base [string replace $mtx_base $in $in "."]
-			}
-			puts $mtx_base
-			#count mathing strings
-			set matchCount [regexp -all $gnomestr $mtx_base]
 		}		
 	}
 
