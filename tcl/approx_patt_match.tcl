@@ -81,10 +81,11 @@ for {set i 0} { $i < 1} {incr i} {
             #puts "Base:$mtx_base"
             lappend ::rangeList $mtx_base
             #count mathing strings
-            set matchCount [regexp -all $gnomestr $mtx_base]
+            #set matchCount [regexp -all $mtx_base $gnomestr ]
+            set matchCount [string first $mtx_base $gnomestr]
             puts "Match Count:$matchCount"
 		}
-        for {set inc 0} {$inc <= [expr $t-1]} {incr inc} {
+        for {set inc 0} {$inc <= [expr $mtx_l-1]} {incr inc} {
             set mtx_base [string replace $mtx_base_original 0 0 "."]
             if {$inc != 0} {
                 set mtx_base [string replace [string replace $mtx_base_original 0 0 "."] $inc $inc "."]
@@ -100,7 +101,8 @@ for {set i 0} { $i < 1} {incr i} {
                     lappend ::rangeList $mtx_base
                 }
                 #count mathing strings
-                set matchCount [regexp -all $gnomestr $mtx_base]
+                #set matchCount [regexp -all {[$mtx_base]} $gnomestr ]
+                set matchCount [string first $mtx_base $gnomestr]
                 puts "Match$in Count:$matchCount"
             }
         }
