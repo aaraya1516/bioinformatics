@@ -20,7 +20,7 @@ if path.isfile(PATH) and access(PATH, R_OK) and useFile == 1:
     print "Genome File Found!";
     useGenomeFile = raw_input('To use file press 1:');
     #open the file
-    if useGenomeFile == '1':
+    if '1' == '1':
         genomeFile = open(PATH ,"r");
         genomeStr = genomeFile.read();
         genomeFile.close();
@@ -38,14 +38,24 @@ base= "AGGTACAT";
 output="";
 indG="";
 dblsMatch=[];
-m=regex.findall("(AGGTACAT){e<=5}", genomeStr, overlapped=True) # means allow up to 3 error
-print m
+indList=[];
+m=regex.findall("(AGGTACAT){s<=5}", genomeStr, overlapped=True)
+#m=regex.findall()
+#print m
 for mm in m:
-    if len(mm) == len(base):
-        if mm not in dblsMatch:
-            indG = genomeStr.index(mm);
-            output = output+" "+str(indG);
-            dblsMatch.append(mm);
-        #print output;
+    indG = genomeStr.index(mm);
+    if indG not in indList:
+        indList.append(indG);
+    else:
+        dblsMatch.append(indG);
+    #print output;
+indList.sort();
+for ind in indList:
+    output = output+" "+str(ind);
 print output;
-print dblsMatch;
+print "Length m:"+str(len(m))
+print "length indList:"+str(len(indList))
+print "Length Doubles:"+str(len(dblsMatch))
+print "m minus dbls Size:"+str(len(m)-len(dblsMatch))
+print "Difference:"+str(len(indList)-(len(m)-len(dblsMatch)))
+print "Clalculated:"+str(len(base)**5)
