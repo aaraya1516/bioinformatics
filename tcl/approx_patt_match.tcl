@@ -50,7 +50,7 @@ set mtx_base_original $mtx_base
 # Start Sorting through string
 #
 #for {set i 0} { $i < $gnmstrLmod} {incr i} {
-for {set i 0} { $i < 2} {incr i} {
+for {set i 0} { $i < 1} {incr i} {
 	set mtx_base $mtx_base_original
 	#Do we have a mtx_base given?
 	if {$mtx_base == ""} {
@@ -74,28 +74,36 @@ for {set i 0} { $i < 2} {incr i} {
 		set second 0
 		set third 0
 		set fourth 0
-		for {set inc 0} {$inc <= [expr $mtx_l-[expr $t-2]]} {incr inc} {
+		for {set inc 0} {$inc <= [expr $mtx_l-1]} {incr inc} {
 			set mtx_base $mtx_base_original
-			if {$i <1} {
-				set mtx_base [string replace $mtx_base $inc $inc "."]
-				incr second
-				puts "Base:$mtx_base"
-				#count mathing strings
-				set matchCount [regexp -all $gnomestr $mtx_base]
-				puts "Match Count:$matchCount"
-			}
+            set mtx_base [string replace $mtx_base $inc $inc "."]
+            incr second
+            #puts "Base:$mtx_base"
+            lappend ::rangeList $mtx_base
+            #count mathing strings
+            set matchCount [regexp -all $gnomestr $mtx_base]
+            puts "Match Count:$matchCount"
 		}
-		set mtx_base [string replace $mtx_base 0 0 "."]
-				set mtx_new_base $mtx_base
-				
-				for {set in 1} {$in <= [expr $mtx_l-[expr $t-2]]} {incr in} {
-					set mtx_base $mtx_new_base
-					set mtx_base [string replace $mtx_base $in $in "."]
-					puts "Base2:$mtx_base"
-					#count mathing strings
-					set matchCount [regexp -all $gnomestr $mtx_base]
-					puts "Match2 Count:$matchCount"
-				}
+        for {set inc 0} {$inc <= [expr $t-1]} {incr inc} {
+            set mtx_base [string replace $mtx_base_original 0 0 "."]
+            if {$inc != 0} {
+                set mtx_base [string replace [string replace $mtx_base_original 0 0 "."] $inc $inc "."]
+            }
+            puts "hi"
+            set mtx_new_base $mtx_base
+            for {set in 1} {$in <= [expr $mtx_l-1]} {incr in} {
+            
+                set mtx_base $mtx_new_base
+                set mtx_base [string replace $mtx_base $in $in "."]
+                #puts "Base2:$mtx_base"
+                if {[lsearch $::rangeList $mtx_base] == -1} {
+                    lappend ::rangeList $mtx_base
+                }
+                #count mathing strings
+                set matchCount [regexp -all $gnomestr $mtx_base]
+                puts "Match$in Count:$matchCount"
+            }
+        }
 	}
 
 }
@@ -106,8 +114,11 @@ puts "Length: $gnmstrL
 second: $second
 third: $third
 fourth: $fourth
-rangeList: $::rangeList
-rangeList Length: [llength $::rangeList]
+rangeList: "
+foreach rListval $::rangeList {
+    puts "$rListval"
+}
+puts "rangeList Length: [llength $::rangeList]
 runtimeStart: $runtimeStart
 runtimeEnd: $runtimeEnd
 runtime: [expr $runtimeEnd - $runtimeStart]"
