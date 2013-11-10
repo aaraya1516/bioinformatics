@@ -11,9 +11,10 @@
 
 
 from os import path, access, R_OK  # W_OK for write permission.
-import time
+#import time
+import regex
 
-PATH='../approxgenome.txt'
+PATH='../approx.txt'
 useFile = 1;
 if path.isfile(PATH) and access(PATH, R_OK) and useFile == 1:
     print "Genome File Found!";
@@ -30,16 +31,21 @@ if path.isfile(PATH) and access(PATH, R_OK) and useFile == 1:
         genomeFile.close();
     #print "String:", genomeStr
 else:
-    genomeStr = "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA";
-
-# Length of Genome
-gnmLength = len(genomeStr);
-
-#How many permutations allowed
-t = 3;
-
-# What codons are we trying to match the pattern to?
-base = "ATTCTGGA";
-baseLength = len(base);
+    genomeStr = "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAAT";
 
 # What are the possible combos of base^t
+base= "AGGTACAT";
+output="";
+indG="";
+dblsMatch=[];
+m=regex.findall("(AGGTACAT){e<=5}", genomeStr, overlapped=True) # means allow up to 3 error
+print m
+for mm in m:
+    if len(mm) == len(base):
+        if mm not in dblsMatch:
+            indG = genomeStr.index(mm);
+            output = output+" "+str(indG);
+            dblsMatch.append(mm);
+        #print output;
+print output;
+print dblsMatch;
