@@ -41,10 +41,12 @@ else:
 k = 4;
 # Number of mismatches
 d = 1;
+#
+# min number of matches
+t=1;
+L=len(genomeStr);
 output="";
 indG="";
-dblsMatch=[];
-indList=[];
 i = 0;
 epoch_timeStart = int(time.time())
 rangeList = [];
@@ -64,24 +66,7 @@ while (i <= strLength-k):
         #print "Count: "+str(genomeStr.count(strRange, i, i+L))
 
     i=i+1
-    
-m=regex.findall("(AGGTACAT){s<=5}", genomeStr, overlapped=True)
-#m=regex.findall()
-#print m
-for mm in m:
-    indG = genomeStr.index(mm);
-    if indG not in indList:
-        indList.append(indG);
-    else:
-        dblsMatch.append(indG);
-    #print output;
-indList.sort();
-for ind in indList:
-    output = output+" "+str(ind);
+
 print output;
-print "Length m:"+str(len(m))
-print "length indList:"+str(len(indList))
-print "Length Doubles:"+str(len(dblsMatch))
-print "m minus dbls Size:"+str(len(m)-len(dblsMatch))
-print "Difference:"+str(len(indList)-(len(m)-len(dblsMatch)))
-#print "Clalculated:"+str(len(base)**5)
+print "Length m:"+str(L)
+print "ragelist:"+str(rangeList)
