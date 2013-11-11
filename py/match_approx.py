@@ -18,11 +18,11 @@ Created on Sun Nov 10 17:39:28 2013
 from os import path, access, R_OK  # W_OK for write permission.
 import regex, time
 
-PATH='../matching_approx.txt'
-useFile = 2;
+PATH='../freq_words_mismatch.txt'
+useFile = 1;
 if path.isfile(PATH) and access(PATH, R_OK) and useFile == 1:
     print "Genome File Found!";
-    #useGenomeFile = raw_input('To use file press 1:');
+    useGenomeFile = raw_input('To use file press 1:');
     #open the file
     if '1' == '1':
         genomeFile = open(PATH ,"r");
@@ -35,12 +35,12 @@ if path.isfile(PATH) and access(PATH, R_OK) and useFile == 1:
         genomeFile.close();
     #print "String:", genomeStr
 else:
-    genomeStr = "ACGTTGCATGTCGCATGATGCATGAGAGCT";
+    genomeStr = "TTCTACTTCACTTCATTCTTCTACACACGTTTCTACGTCTTCGTTACTTCGTTTCCACGTCATATACACTTTTCCATTCTTCTTCCACTTTTCCTTTTCCGTCTTCTTCTTTTCCTTTTCTTCTTCCACATTCTACTTCGTCTTCACTTTTCTTCTTCCGTCGTTACATACATTCCGTCGTCGTTTCTATTCTTCCGTTTCCACACGTTACTTCATATATTCCACATACTTTATATACTTCGTCGTTATATACATACACTTCTTCATTCCATTCCACACACTTCTTCGTCGTCACTTTTCTTCCGTTACTTTACTTCACGTCACGTCGTCTTCACACGTCTTCATACGTCGTCTTCACACATACATATTCTATTCCTTCTTCGTTACATTC";
 
 # k-mer length
-k = 4;
+k = 10;
 # Number of mismatches
-d = 1;
+d = 2;
 #
 # min number of matches
 t=1;
@@ -54,22 +54,20 @@ strDict = {};
 
 strLength = len(genomeStr)
 print "Starting Loop"
-while (i <= strLength-k):
+while (i <= strLength):
     # count 1 plus k-mer length
     endRange = i+k
     #value of string 
     strRange = genomeStr[i:endRange]
-    m = regex.findall("("+strRange+"){s<=1}", genomeStr, overlapped=True)
+    m = regex.findall("("+strRange+"){s<=2}", genomeStr, overlapped=True)
     #print strRange    
     #print str(m)
-    if m != []:
+    if m != [] and len(strRange) == k:
         strDict[strRange] = len(m)
         rangeList.append(strRange)
         #concatString=concatString+" "+strRange
         #print "String: "+strRange
-        #print "Count: "+str(genomeStr.count(strRange, i, i+L))
-
-        
+        #print "Count: "+str(genomeStr.count(strRange, i, i+L))        
     i=i+1
 
 print output;
