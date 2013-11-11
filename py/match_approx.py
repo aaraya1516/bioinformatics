@@ -45,11 +45,12 @@ d = 1;
 # min number of matches
 t=1;
 L=len(genomeStr);
-output="";
+output=0;
 indG="";
 i = 0;
 epoch_timeStart = int(time.time())
 rangeList = [];
+strDict = {};
 
 strLength = len(genomeStr)
 print "Starting Loop"
@@ -59,17 +60,22 @@ while (i <= strLength-k):
     #value of string 
     strRange = genomeStr[i:endRange]
     m = regex.findall("("+strRange+"){s<=1}", genomeStr, overlapped=True)
-    print strRange    
-    print str(m)
-    #if len(strRange) == k and strRange not in rangeList:
-    if m != []:    
+    #print strRange    
+    #print str(m)
+    if m != []:
+        strDict[strRange] = len(m)
         rangeList.append(strRange)
         #concatString=concatString+" "+strRange
         #print "String: "+strRange
         #print "Count: "+str(genomeStr.count(strRange, i, i+L))
 
+        
     i=i+1
 
 print output;
 print "Length L:"+str(L)
 print "ragelist:"+str(rangeList)
+for key in strDict.keys():
+    if strDict[key] >= output:
+        output = strDict[key];
+        print key, 'length:',strDict[key]
