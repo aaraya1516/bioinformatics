@@ -58,8 +58,11 @@ while (i <= strLength-k):
     endRange = i+k
     #value of string 
     strRange = genomeStr[i:endRange]
-
-    if len(strRange) == k and genomeStr.count(strRange, i, i+L) >= t and strRange not in rangeList:
+    m = regex.findall("("+strRange+"){s<=1}", genomeStr, overlapped=True)
+    print strRange    
+    print str(m)
+    #if len(strRange) == k and strRange not in rangeList:
+    if m != []:    
         rangeList.append(strRange)
         #concatString=concatString+" "+strRange
         #print "String: "+strRange
@@ -68,5 +71,5 @@ while (i <= strLength-k):
     i=i+1
 
 print output;
-print "Length m:"+str(L)
+print "Length L:"+str(L)
 print "ragelist:"+str(rangeList)
