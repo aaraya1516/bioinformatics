@@ -51,6 +51,7 @@ i = 0;
 epoch_timeStart = int(time.time())
 rangeList = [];
 strDict = {};
+biggestM = [];
 
 strLength = len(genomeStr)
 print "Starting Loop"
@@ -65,6 +66,17 @@ while (i <= strLength):
     if m != [] and len(strRange) == k:
         strDict[strRange] = len(m)
         rangeList.append(strRange)
+        newList = [];
+        newStrDict = {};
+        
+        for codon in m:
+            n = regex.findall("("+codon+"){s<=2}", genomeStr, overlapped=True)
+            newStrDict[codon] = len(n)
+            strDict[strRange] = len(m)+len(n)
+            newList.append(strRange)
+
+        if len(m) > len(biggestM):
+            biggestM = m;
         #concatString=concatString+" "+strRange
         #print "String: "+strRange
         #print "Count: "+str(genomeStr.count(strRange, i, i+L))        
@@ -77,3 +89,10 @@ for key in strDict.keys():
     if strDict[key] >= output:
         output = strDict[key];
         print key, 'length:',strDict[key]
+
+print "biggest M:"+str(biggestM)
+newOut = 0;
+for key in newStrDict.keys():
+    if newStrDict[key] >= newOut:
+        newOut = newStrDict[key];
+        print key, 'length:',newStrDict[key]
