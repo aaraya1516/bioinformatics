@@ -74,7 +74,7 @@ while (i <= rnastrLen-k):
 
     # index val for the end of the frame we're looking at
     endRange = i+k;
-    print endRange
+    #print endRange
     #value of codon we're looking at
     ksizeCodon = rnastr[i:endRange];
     #print ksizeCodon;
@@ -85,6 +85,10 @@ while (i <= rnastrLen-k):
     if str(protein) != "None":
         #print protein
         outPutString = outPutString+str(protein)
+        
+    if 68<len(outPutString)<80:
+        print protein
+        print ksizeCodon
     i += 3;
 
 #Example protein Output for comparision for accuracy
