@@ -35,3 +35,7 @@ if path.isfile(PATH) and access(PATH, R_OK):
         for line in f:
             (key, val) = line.split()
             d[int(key)] = val
+            
+# RNA to translate
+rnastr = "AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA"
+
