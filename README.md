@@ -1,7 +1,7 @@
 bioinformatics
 ==============
 
-tcl scripts for bioinformatics on coursera.com
+python and tcl scripts for bioinformatics on coursera.com
 
 https://class.coursera.org/bioinformatics-001
 
