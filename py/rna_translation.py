@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Nov 14 15:05:10 2013
+Created on Thu Nov 14
 
 @author: alejandro.araya
 """
@@ -23,19 +23,80 @@ Created on Thu Nov 14 15:05:10 2013
 #     MAMAPRTEINSTRING
      
 
-from os import path, access, R_OK  # W_OK for write permission.
+from os import path  # W_OK for write permission.
 #import time
 #import regex
 
-PATH='../approx.txt'
-if path.isfile(PATH) and access(PATH, R_OK):
-    print "Genome File Found!";
+PATH="../RNA_codon_table_1.txt"
+if path.isfile(PATH):
+    print "RNA Dictionary File Found!";
     d = {}
     with open(PATH) as f:
         for line in f:
-            (key, val) = line.split()
-            d[int(key)] = val
-            
-# RNA to translate
-rnastr = "AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA"
+            #print len(line)
+            if len(line) == 6:
+                (key, val) = line.split()
+                d[key] = val
+                #print d[key]
+            else:
+                d[line] = ""
+else:
+    print "RNA Dictionary File NOT Found! "
+    print "Path is:"+PATH
 
+# SHould we use the example?
+useExample = 1;
+
+# RNA to translate
+rnaPath="../rnaInput.txt"
+if path.isfile(rnaPath) and useExample==1:
+    print "RNA String Found!"
+    rnaFile = open(rnaPath ,"r");
+    rnastr = rnaFile.read();
+    rnaFile.close();
+else:
+    rnastr = "AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA";
+    
+rnastrLen = len(rnastr);
+
+# Codon size we're translating
+k = 3;
+
+#counter starting at 0
+i = 0;
+
+# output string
+outPutString = "";
+
+# Loop through RNA strand until we reach the end
+while (i <= rnastrLen-k):
+    #print i
+
+    # index val for the end of the frame we're looking at
+    endRange = i+k;
+    print endRange
+    #value of codon we're looking at
+    ksizeCodon = rnastr[i:endRange];
+    #print ksizeCodon;
+    
+    # get the protein from the dictionary
+    protein = d.get(ksizeCodon)
+    
+    if str(protein) != "None":
+        #print protein
+        outPutString = outPutString+str(protein)
+    i += 3;
+
+#Example protein Output for comparision for accuracy
+rnaOutputComp="../rnaOutputComp.txt"
+if path.isfile(rnaOutputComp) and useExample==1:
+    print "Protien String Found!"
+    proteinFile = open(rnaOutputComp ,"r");
+    proteinstr = proteinFile.read();
+    proteinFile.close();
+
+if outPutString == proteinstr:
+    print "Successful Match!"
+else:
+    print "Protein Seq Not Matching: "+outPutString
+    print "Size diff (output - comparable): "+str(len(outPutString)-len(proteinstr))
